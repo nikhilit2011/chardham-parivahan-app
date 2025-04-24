@@ -1,0 +1,26 @@
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-info text-white">
+      <h4 class="mb-0">Vehicle Details</h4>
+    </div>
+    <div class="card-body">
+      <p><strong>Vehicle Number:</strong> <%= @vehicle.vehicle_number %></p>
+      <p><strong>Check Date:</strong> <%= @vehicle.check_date %></p>
+      <p><strong>Owner:</strong> <%= @vehicle.owner %></p>
+      <p><strong>Checkpost:</strong> <%= @vehicle.checkpost %></p>
+      <p><strong>Char Dham Registration Number:</strong> <%= @vehicle.char_dham_registration_number %></p>
+      <p><strong>Green Card Status:</strong> <%= @vehicle.green_card_status %></p>
+      <p><strong>Trip Card Status:</strong> <%= @vehicle.trip_card_status %></p>
+      <p><strong>Number of Pilgrims:</strong> <%= @vehicle.number_of_pilgrims %></p>
+      <p><strong>Dham Destinations:</strong> <%= @vehicle.dham_list.join(', ') %></p>
+      <p><strong>Return Date:</strong> <%= @vehicle.return_date.presence || "N/A" %></p>
+      <p><strong>Registered in Uttarakhand:</strong> <%= @vehicle.registered_in_uttarakhand ? "Yes" : "No" %></p>
+      <p><strong>Remarks:</strong> <%= @vehicle.remarks %></p>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <%= link_to "Back to List", vehicles_path, class: "btn btn-secondary" %>
+    <%= link_to "New Entry", new_vehicle_path, class: "btn btn-primary ms-2" %>
+  </div>
+</div>

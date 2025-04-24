@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <div class="card shadow-sm rounded">
+    <div class="card-header bg-success text-white">
+      <h5 class="mb-0">Search Results</h5>
+    </div>
+    <div class="card-body">
+      <% if @vehicles.any? %>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Vehicle Number</th>
+              <th>Check Date</th>
+              <th>Owner</th>
+              <th>Checkpost</th>
+              <th>Char Dham Reg. No.</th>
+              <th>Trip Card</th>
+              <th>Green Card</th>
+              <th>Dham(s)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @vehicles.each do |vehicle| %>
+              <tr>
+                <td><%= vehicle.vehicle_number %></td>
+                <td><%= vehicle.check_date %></td>
+                <td><%= vehicle.owner %></td>
+                <td><%= vehicle.checkpost %></td>
+                <td><%= vehicle.char_dham_registration_number %></td>
+                <td><%= vehicle.trip_card_status %></td>
+                <td><%= vehicle.green_card_status %></td>
+                <td><%= vehicle.dham_list.join(', ') %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No matching vehicles found.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>All Vehicles</h2>
+    <%= link_to "Add New Vehicle", new_vehicle_path, class: "btn btn-primary" %>
+  </div>
+
+  <% if @vehicles.any? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Vehicle Number</th>
+          <th>Check Date</th>
+          <th>Owner</th>
+          <th>Char Dham Reg. No.</th>
+          <th>Dham(s)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @vehicles.each do |vehicle| %>
+          <tr>
+            <td><%= vehicle.vehicle_number %></td>
+            <td><%= vehicle.check_date %></td>
+            <td><%= vehicle.owner %></td>
+            <td><%= vehicle.char_dham_registration_number %></td>
+            <td><%= vehicle.dham_list.join(', ') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No vehicle entries yet.</p>
+  <% end %>
+</div>

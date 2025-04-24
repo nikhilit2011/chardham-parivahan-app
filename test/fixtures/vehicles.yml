@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vehicle_number: MyString
+  checkpost: MyString
+  owner: MyString
+  char_dham_registration_number: MyString
+  green_card_status: MyString
+  trip_card_status: MyString
+  check_date: 2025-04-24
+  number_of_pilgrims: 1
+  dham_destinations: MyString
+  return_date: 2025-04-24
+  registered_in_uttarakhand: false
+  remarks: MyText
+
+two:
+  vehicle_number: MyString
+  checkpost: MyString
+  owner: MyString
+  char_dham_registration_number: MyString
+  green_card_status: MyString
+  trip_card_status: MyString
+  check_date: 2025-04-24
+  number_of_pilgrims: 1
+  dham_destinations: MyString
+  return_date: 2025-04-24
+  registered_in_uttarakhand: false
+  remarks: MyText

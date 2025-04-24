@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="card shadow-sm rounded">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">New Vehicle Entry</h5>
+        </div>
+        <div class="card-body">
+
+          <%= simple_form_for @vehicle do |f| %>
+            <div class="row">
+              <div class="col-md-6"><%= f.input :vehicle_number %></div>
+              <div class="col-md-6"><%= f.input :check_date %></div>
+              <div class="col-md-6"><%= f.input :checkpost %></div>
+              <div class="col-md-6"><%= f.input :owner %></div>
+              <div class="col-md-6"><%= f.input :char_dham_registration_number %></div>
+              <div class="col-md-6"><%= f.input :green_card_status, collection: ['Yes', 'No'] %></div>
+              <div class="col-md-6"><%= f.input :trip_card_status, collection: ['Active', 'Expired'] %></div>
+              <div class="col-md-6"><%= f.input :number_of_pilgrims %></div>
+              <div class="col-md-12">
+                <%= f.input :dham_destinations, collection: ['Yamunotri Ji', 'Gangotri Ji', 'Kedarnath Ji', 'Badrinath Ji', 'Hemkund Sahib'],
+                  input_html: { multiple: true, class: 'select2 form-control' } %>
+              </div>
+              <div class="col-md-6"><%= f.input :return_date, as: :date, include_blank: true, input_html: { value: nil } %></div>
+              <div class="col-md-6"><%= f.input :registered_in_uttarakhand, as: :boolean %></div>
+              <div class="col-md-12"><%= f.input :remarks %></div>
+            </div>
+            <div class="mt-3">
+              <%= f.button :submit, "Save Vehicle", class: "btn btn-success" %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
