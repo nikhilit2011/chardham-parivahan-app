@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     root to: "dashboard#index"  # 👈 This enables /admin to route correctly
     resources :users, only: [:index, :new, :create, :edit, :update]
   end
+  
+  get '/create_admin_user', to: 'admin#temp_admin_create'
 
   # Root path for normal users
   root "vehicles#index"
