@@ -1,5 +1,3 @@
-# Force re-deploy to Render
-
 class CreateVehicles < ActiveRecord::Migration[7.1]
   def change
     create_table :vehicles do |t|
@@ -17,7 +15,9 @@ class CreateVehicles < ActiveRecord::Migration[7.1]
       t.text :remarks
 
       t.timestamps
-      add_index :vehicles, [:vehicle_number, :check_date], unique: true
     end
+
+    # ✅ Place it here, after create_table
+    add_index :vehicles, [:vehicle_number, :check_date], unique: true
   end
 end
