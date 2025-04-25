@@ -1,6 +1,6 @@
 class VehiclesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_vehicle, only: %i[show]
+  before_action :set_vehicle, only: %i[show edit update]
 
   def index
     @vehicles = Vehicle.order(created_at: :desc).limit(50)
@@ -19,6 +19,17 @@ class VehiclesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @vehicle.update(vehicle_params)
+      redirect_to @vehicle, notice: "Vehicle was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def show; end
 
   def search
@@ -26,11 +37,8 @@ class VehiclesController < ApplicationController
   end
 
   def results
-    # will add results logic later
-    
     @vehicles = Vehicle.all
-    
-    
+
     if params[:dham_destinations].present?
       selected_dhams = Array(params[:dham_destinations]).map(&:strip)
 
@@ -39,29 +47,25 @@ class VehiclesController < ApplicationController
       end
     end
 
-      if params[:vehicle_number].present?
-        formatted_number = format_vehicle(params[:vehicle_number])
-        @vehicles = @vehicles.where("vehicle_number ILIKE ?", "%#{formatted_number}%")
-      end
-      
-      
+    if params[:vehicle_number].present?
+      formatted_number = format_vehicle(params[:vehicle_number])
+      @vehicles = @vehicles.where("vehicle_number ILIKE ?", "%#{formatted_number}%")
+    end
 
-      @vehicles = @vehicles.where(check_date: params[:check_date]) if params[:check_date].present?
-      @vehicles = @vehicles.where("owner ILIKE ?", "%#{params[:owner]}%") if params[:owner].present?
-      @vehicles = @vehicles.where("checkpost ILIKE ?", "%#{params[:checkpost]}%") if params[:checkpost].present?
-      @vehicles = @vehicles.where("char_dham_registration_number ILIKE ?", "%#{params[:char_dham_registration_number]}%") if params[:char_dham_registration_number].present?
-      @vehicles = @vehicles.where(green_card_status: params[:green_card_status]) if params[:green_card_status].present?
-      @vehicles = @vehicles.where(trip_card_status: params[:trip_card_status]) if params[:trip_card_status].present?
-      @vehicles = @vehicles.where(number_of_pilgrims: params[:number_of_pilgrims]) if params[:number_of_pilgrims].present?
+    @vehicles = @vehicles.where(check_date: params[:check_date]) if params[:check_date].present?
+    @vehicles = @vehicles.where("owner ILIKE ?", "%#{params[:owner]}%") if params[:owner].present?
+    @vehicles = @vehicles.where("checkpost ILIKE ?", "%#{params[:checkpost]}%") if params[:checkpost].present?
+    @vehicles = @vehicles.where("char_dham_registration_number ILIKE ?", "%#{params[:char_dham_registration_number]}%") if params[:char_dham_registration_number].present?
+    @vehicles = @vehicles.where(green_card_status: params[:green_card_status]) if params[:green_card_status].present?
+    @vehicles = @vehicles.where(trip_card_status: params[:trip_card_status]) if params[:trip_card_status].present?
+    @vehicles = @vehicles.where(number_of_pilgrims: params[:number_of_pilgrims]) if params[:number_of_pilgrims].present?
 
-      if params[:registered_in_uttarakhand].present?
-        value = ActiveModel::Type::Boolean.new.cast(params[:registered_in_uttarakhand])
-        @vehicles = @vehicles.where(registered_in_uttarakhand: value)
-      end
+    if params[:registered_in_uttarakhand].present?
+      value = ActiveModel::Type::Boolean.new.cast(params[:registered_in_uttarakhand])
+      @vehicles = @vehicles.where(registered_in_uttarakhand: value)
+    end
 
-      @vehicles = @vehicles.where("remarks ILIKE ?", "%#{params[:remarks]}%") if params[:remarks].present?
-      
-      
+    @vehicles = @vehicles.where("remarks ILIKE ?", "%#{params[:remarks]}%") if params[:remarks].present?
   end
 
   private
@@ -75,11 +79,9 @@ class VehiclesController < ApplicationController
       :vehicle_number, :checkpost, :owner, :char_dham_registration_number,
       :green_card_status, :trip_card_status, :check_date, :number_of_pilgrims,
       :return_date, :registered_in_uttarakhand, :remarks,
-      dham_destinations: [] # ✅ Allow array input
+      dham_destinations: []
     )
   end
-  
-  private
 
   def format_vehicle(raw)
     return raw if raw.blank?
@@ -91,5 +93,4 @@ class VehiclesController < ApplicationController
       raw
     end
   end
-  
 end

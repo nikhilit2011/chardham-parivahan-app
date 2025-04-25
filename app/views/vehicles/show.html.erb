@@ -12,15 +12,25 @@
       <p><strong>Green Card Status:</strong> <%= @vehicle.green_card_status %></p>
       <p><strong>Trip Card Status:</strong> <%= @vehicle.trip_card_status %></p>
       <p><strong>Number of Pilgrims:</strong> <%= @vehicle.number_of_pilgrims %></p>
-      <p><strong>Dham Destinations:</strong> <%= @vehicle.dham_list.join(', ') %></p>
-      <p><strong>Return Date:</strong> <%= @vehicle.return_date.presence || "N/A" %></p>
-      <p><strong>Registered in Uttarakhand:</strong> <%= @vehicle.registered_in_uttarakhand ? "Yes" : "No" %></p>
+
+      <p><strong>Dham Destinations:</strong> <%= @vehicle.dham_list.reject(&:blank?).join(', ') %></p>
+
+      <p><strong>Return Date:</strong> <%= @vehicle.return_date.presence || "Not returned yet" %></p>
+
+      <p>
+        <strong>Vehicle Origin:</strong>
+        <%= @vehicle.registered_in_uttarakhand? ? "Registered in Uttarakhand" : "Outside Uttarakhand Vehicle" %>
+      </p>
+
       <p><strong>Remarks:</strong> <%= @vehicle.remarks %></p>
     </div>
   </div>
 
   <div class="mt-3">
     <%= link_to "Back to List", vehicles_path, class: "btn btn-secondary" %>
+    <% if current_user.admin? || current_user.creator? %>
+      <%= link_to "Edit", edit_vehicle_path(@vehicle), class: "btn btn-sm btn-outline-primary ms-2" %>
+    <% end %>
     <%= link_to "New Entry", new_vehicle_path, class: "btn btn-primary ms-2" %>
   </div>
 </div>

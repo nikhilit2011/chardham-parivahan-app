@@ -21,7 +21,7 @@
                 <%= f.input :dham_destinations, collection: ['Yamunotri Ji', 'Gangotri Ji', 'Kedarnath Ji', 'Badrinath Ji', 'Hemkund Sahib'],
                   input_html: { multiple: true, class: 'select2 form-control' } %>
               </div>
-              <div class="col-md-6"><%= f.input :return_date, as: :date, include_blank: true, input_html: { value: nil } %></div>
+              
               <div class="col-md-6"><%= f.input :registered_in_uttarakhand, as: :boolean %></div>
               <div class="col-md-12"><%= f.input :remarks %></div>
             </div>

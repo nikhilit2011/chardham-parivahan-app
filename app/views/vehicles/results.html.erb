@@ -16,6 +16,9 @@
               <th>Trip Card</th>
               <th>Green Card</th>
               <th>Dham(s)</th>
+              <% unless current_user.reader? %>
+                <th>Action</th>
+              <% end %>
             </tr>
           </thead>
           <tbody>
@@ -28,7 +31,12 @@
                 <td><%= vehicle.char_dham_registration_number %></td>
                 <td><%= vehicle.trip_card_status %></td>
                 <td><%= vehicle.green_card_status %></td>
-                <td><%= vehicle.dham_list.join(', ') %></td>
+                <td><%= vehicle.dham_list.reject(&:blank?).join(', ') %></td>
+                <% unless current_user.reader? %>
+                  <td>
+                    <%= link_to "Show", vehicle_path(vehicle), class: "btn btn-sm btn-outline-primary" %>
+                  </td>
+                <% end %>
               </tr>
             <% end %>
           </tbody>
