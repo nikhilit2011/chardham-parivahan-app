@@ -12,7 +12,10 @@
 
 <div class="mb-3">
   <%= f.label :checkpost, class: "form-label" %>
-  <%= f.text_field :checkpost, class: "form-control" %>
+  <%= f.select :checkpost, [
+      "Kuthal Gate", "Kata Patthat", "Herbertpur", "Bhadrakali", 
+      "Tapovan", "Satyanarayan", "Sonprayag"
+    ], { prompt: "Select Checkpost" }, class: "form-select" %>
 </div>
 
 <div class="mb-3">

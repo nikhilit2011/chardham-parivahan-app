@@ -1,4 +1,4 @@
-<div class="container mt-4">
+div class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-md-10 col-lg-8">
       <div class="card shadow-sm rounded">
@@ -11,20 +11,34 @@
             <div class="row">
               <div class="col-md-6"><%= f.input :vehicle_number %></div>
               <div class="col-md-6"><%= f.input :check_date %></div>
-              <div class="col-md-6"><%= f.input :checkpost %></div>
+
+              <!-- ✅ Dropdown for Checkpost -->
+              <div class="col-md-6">
+                <%= f.input :checkpost, collection: [
+                      'Kuthal Gate', 'Kata Patthat', 'Herbertpur',
+                      'Bhadrakali', 'Tapovan', 'Satyanarayan', 'Sonprayag'
+                    ],
+                    prompt: "Select Checkpost" %>
+              </div>
+
               <div class="col-md-6"><%= f.input :owner %></div>
               <div class="col-md-6"><%= f.input :char_dham_registration_number %></div>
               <div class="col-md-6"><%= f.input :green_card_status, collection: ['Yes', 'No'] %></div>
               <div class="col-md-6"><%= f.input :trip_card_status, collection: ['Active', 'Expired'] %></div>
               <div class="col-md-6"><%= f.input :number_of_pilgrims %></div>
-              <div class="col-md-12">
-                <%= f.input :dham_destinations, collection: ['Yamunotri Ji', 'Gangotri Ji', 'Kedarnath Ji', 'Badrinath Ji', 'Hemkund Sahib'],
-                  input_html: { multiple: true, class: 'select2 form-control' } %>
-              </div>
               
+              <div class="col-md-12">
+                <%= f.input :dham_destinations, collection: [
+                      'Yamunotri Ji', 'Gangotri Ji', 'Kedarnath Ji',
+                      'Badrinath Ji', 'Hemkund Sahib'
+                    ],
+                    input_html: { multiple: true, class: 'select2 form-control' } %>
+              </div>
+
               <div class="col-md-6"><%= f.input :registered_in_uttarakhand, as: :boolean %></div>
               <div class="col-md-12"><%= f.input :remarks %></div>
             </div>
+
             <div class="mt-3">
               <%= f.button :submit, "Save Vehicle", class: "btn btn-success" %>
             </div>
