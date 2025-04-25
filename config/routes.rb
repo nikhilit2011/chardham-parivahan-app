@@ -1,8 +1,17 @@
 Rails.application.routes.draw do
+  # Devise user authentication
   devise_for :users
-  
+
+  # Admin namespace
+  namespace :admin do
+    root to: "dashboard#index"  # 👈 This enables /admin to route correctly
+    resources :users, only: [:index, :new, :create, :edit, :update]
+  end
+
+  # Root path for normal users
   root "vehicles#index"
 
+  # Vehicles management
   resources :vehicles do
     collection do
       get :search

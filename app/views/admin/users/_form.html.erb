@@ -1,0 +1,21 @@
+<div class="mb-3">
+  <%= f.label :email %>
+  <%= f.email_field :email, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+  <%= f.label :password %>
+  <%= f.password_field :password, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+  <%= f.label :role %>
+  <%= f.select :role, [['Admin', 'admin'], ['Creator', 'creator'], ['Reader', 'reader']], {}, class: "form-select" %>
+</div>
+
+<%= f.submit class: "btn btn-primary" %>

@@ -1,0 +1,48 @@
+<h1 class="mb-4">Welcome Admin</h1>
+<p class="lead">This is your dashboard.</p>
+
+<%= link_to "Manage Users", admin_users_path, class: "btn btn-secondary mt-3" %>
+<div class="row mt-4">
+  <div class="col-md-4">
+    <div class="card shadow-sm p-3 mb-3">
+      <h5>Total Vehicles</h5>
+      <p><strong><%= Vehicle.count %></strong></p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm p-3 mb-3">
+      <h5>Total Users</h5>
+      <p><strong><%= User.count %></strong></p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm p-3 mb-3">
+      <h5>Creators</h5>
+      <p><strong><%= User.where(role: 'creator').count %></strong></p>
+    </div>
+  </div>
+</div>
+
+<h4 class="mt-5">Recent Vehicle Entries</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Vehicle Number</th>
+      <th>Check Date</th>
+      <th>Owner</th>
+      <th>Checkpost</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Vehicle.order(created_at: :desc).limit(10).each do |vehicle| %>
+      <tr>
+        <td><%= vehicle.vehicle_number %></td>
+        <td><%= vehicle.check_date %></td>
+        <td><%= vehicle.owner %></td>
+        <td><%= vehicle.checkpost %></td>
+        <td><%= link_to 'View', vehicle_path(vehicle), class: 'btn btn-sm btn-primary' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
