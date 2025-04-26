@@ -1,0 +1,40 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Search Results") do |sheet|
+  # Header row
+  sheet.add_row [
+    "Serial No",
+    "Vehicle Number",
+    "Check Date",
+    "Owner",
+    "Checkpost",
+    "Char Dham Reg. No.",
+    "Trip Card Status",
+    "Green Card Status",
+    "Number of Pilgrims",
+    "Dham Destinations",
+    "Number of Dhams Visited",
+    "Return Date",
+    "UK Registered?",
+    "Remarks"
+  ]
+
+  @vehicles.each_with_index do |vehicle, index|
+    sheet.add_row [
+      index + 1,
+      vehicle.vehicle_number,
+      vehicle.check_date,
+      vehicle.owner,
+      vehicle.checkpost,
+      vehicle.char_dham_registration_number,
+      vehicle.trip_card_status,
+      vehicle.green_card_status,
+      vehicle.number_of_pilgrims,
+      vehicle.formatted_dham_destinations,
+      vehicle.number_of_dhams_visited,
+      vehicle.return_date,
+      vehicle.registered_in_uttarakhand ? 'Yes' : 'No',
+      vehicle.remarks
+    ]
+  end
+end

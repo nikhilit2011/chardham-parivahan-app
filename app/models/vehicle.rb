@@ -7,12 +7,12 @@ class Vehicle < ApplicationRecord
             :trip_card_status, :number_of_pilgrims,
             presence: true
 
+  validates :vehicle_number, uniqueness: { scope: :check_date }
+
   validate :validate_dham_destinations_presence
   validate :return_date_not_equal_check_date
   validate :require_return_date_if_duplicate_vehicle_on_diff_date, on: :create
   validate :prevent_return_date_on_create, on: :create
-
-  validates :vehicle_number, uniqueness: { scope: :check_date }
 
   VALID_VEHICLE_REGEX = /\A[A-Z]{2} \d{2} [A-Z]{1,3} \d{4}\z/
   validates :vehicle_number, format: {
@@ -20,8 +20,31 @@ class Vehicle < ApplicationRecord
     message: "must be in format: UK 07 TA 1234"
   }
 
+  # Return dham destinations as Array
   def dham_list
-    dham_destinations&.split(',')&.map(&:strip) || []
+    dham_array = begin
+      if dham_destinations.is_a?(Array)
+        dham_destinations
+      elsif dham_destinations.is_a?(String) && dham_destinations.strip.start_with?('[')
+        JSON.parse(dham_destinations)
+      else
+        dham_destinations.split(',')
+      end
+    rescue
+      []
+    end
+
+    dham_array.reject(&:blank?).map(&:strip)
+  end
+
+  # Return dham destinations as a clean string
+  def formatted_dham_destinations
+    dham_list.join(", ")
+  end
+
+  # Return count of dhams visited
+  def number_of_dhams_visited
+    dham_list.count
   end
 
   private

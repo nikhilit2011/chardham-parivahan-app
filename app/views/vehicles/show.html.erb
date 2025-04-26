@@ -13,7 +13,7 @@
       <p><strong>Trip Card Status:</strong> <%= @vehicle.trip_card_status %></p>
       <p><strong>Number of Pilgrims:</strong> <%= @vehicle.number_of_pilgrims %></p>
 
-      <p><strong>Dham Destinations:</strong> <%= @vehicle.dham_list.reject(&:blank?).join(', ') %></p>
+      <p><strong>Dham Destinations:</strong> <%= @vehicle.formatted_dham_destinations %></p>
 
       <p><strong>Return Date:</strong> <%= @vehicle.return_date.presence || "Not returned yet" %></p>
 

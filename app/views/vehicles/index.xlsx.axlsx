@@ -1,0 +1,53 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Vehicles Data") do |sheet|
+  # Header Row
+  sheet.add_row [
+    "Serial No",
+    "Vehicle Number",
+    "Checkpost",
+    "Owner",
+    "Char Dham Reg No",
+    "Green Card Status",
+    "Trip Card Status",
+    "Number of Pilgrims",
+    "Dham Destinations",
+    "Number of Dhams Visited",
+    "Check Date",
+    "Return Date",
+    "Remarks",
+    "UK Registered?"
+  ]
+
+  Vehicle.order(created_at: :desc).find_each.with_index do |vehicle, index|
+    # Safely parse dham_destinations and clean it
+    dham_names_array = begin
+      value = vehicle.dham_destinations
+      value.is_a?(String) ? JSON.parse(value).reject(&:blank?) : Array(value).reject(&:blank?)
+    rescue
+      []
+    end
+
+    # Prepare dham names string and count
+    dham_names = dham_names_array.join(", ")
+    dham_count = dham_names_array.count
+
+    # Add Data Row
+    sheet.add_row [
+      index + 1,
+      vehicle.vehicle_number,
+      vehicle.checkpost,
+      vehicle.owner,
+      vehicle.char_dham_registration_number,
+      vehicle.green_card_status,
+      vehicle.trip_card_status,
+      vehicle.number_of_pilgrims,
+      dham_names,
+      dham_count,
+      vehicle.check_date,
+      vehicle.return_date,
+      vehicle.remarks,
+      vehicle.registered_in_uttarakhand ? "Yes" : "No"
+    ]
+  end
+end

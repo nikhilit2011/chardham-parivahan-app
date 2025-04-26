@@ -1,8 +1,6 @@
 <div class="container mt-4">
   <div class="card shadow-sm rounded">
-    <div class="card-header bg-primary text-white">
-      <h5 class="mb-0">Search Vehicles</h5>
-    </div>
+    
     <div class="card-body">
       <%= form_with url: results_vehicles_path, method: :get, local: true do %>
         <div class="row">
@@ -12,8 +10,13 @@
           </div>
 
           <div class="col-md-4 mb-3">
-            <%= label_tag :check_date, "Check Date" %>
-            <%= date_field_tag :check_date, params[:check_date], class: "form-control" %>
+            <%= label_tag :start_date, "Start Check Date" %>
+            <%= date_field_tag :start_date, params[:start_date], class: "form-control" %>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <%= label_tag :end_date, "End Check Date" %>
+            <%= date_field_tag :end_date, params[:end_date], class: "form-control" %>
           </div>
 
           <div class="col-md-4 mb-3">
@@ -50,20 +53,20 @@
             <%= label_tag :registered_in_uttarakhand, "Registered in Uttarakhand" %>
             <%= select_tag :registered_in_uttarakhand, options_for_select([["", ""], ["true", "Yes"], ["false", "No"]], params[:registered_in_uttarakhand]), class: "form-control" %>
           </div>
-		  
-		  <div class="col-md-12 mb-3">
-		    <%= label_tag :dham_destinations, "Dham Destinations" %>
-		    <%= select_tag :dham_destinations,
-		          options_for_select([
-		            "Yamunotri Ji",
-		            "Gangotri Ji",
-		            "Kedarnath Ji",
-		            "Badrinath Ji",
-		            "Hemkund Sahib"
-		          ], params[:dham_destinations]),
-		          multiple: true,
-		          class: "form-control select2" %>
-		  </div>
+
+          <div class="col-md-12 mb-3">
+            <%= label_tag :dham_destinations, "Dham Destinations" %>
+            <%= select_tag :dham_destinations,
+                options_for_select([
+                  "Yamunotri Ji",
+                  "Gangotri Ji",
+                  "Kedarnath Ji",
+                  "Badrinath Ji",
+                  "Hemkund Sahib"
+                ], params[:dham_destinations]),
+                multiple: true,
+                class: "form-control select2" %>
+          </div>
 
           <div class="col-md-12 mb-3">
             <%= label_tag :remarks, "Remarks" %>

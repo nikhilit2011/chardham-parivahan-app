@@ -1,12 +1,14 @@
 <div class="container mt-4">
   <div class="card shadow-sm rounded">
-    <div class="card-header bg-success text-white">
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
       <h5 class="mb-0">Search Results</h5>
+      <%= link_to "Download Excel", results_vehicles_path(request.query_parameters.merge(format: :xlsx)), class: "btn btn-light text-success" %>
     </div>
+
     <div class="card-body">
       <% if @vehicles.any? %>
         <table class="table table-bordered table-striped">
-          <thead>
+          <thead style="background-color: #cce5ff; color: black;">
             <tr>
               <th>Vehicle Number</th>
               <th>Check Date</th>
@@ -31,7 +33,7 @@
                 <td><%= vehicle.char_dham_registration_number %></td>
                 <td><%= vehicle.trip_card_status %></td>
                 <td><%= vehicle.green_card_status %></td>
-                <td><%= vehicle.dham_list.reject(&:blank?).join(', ') %></td>
+                <td><%= vehicle.formatted_dham_destinations %></td>
                 <% unless current_user.reader? %>
                   <td>
                     <%= link_to "Show", vehicle_path(vehicle), class: "btn btn-sm btn-outline-primary" %>
@@ -41,12 +43,12 @@
             <% end %>
           </tbody>
         </table>
-		<div class="d-flex justify-content-center mt-3">
-		  <%= paginate @vehicles %>
-		</div>
-		
+
+        <div class="d-flex justify-content-center mt-3">
+          <%= paginate @vehicles %>
+        </div>
       <% else %>
-        <p>No matching vehicles found.</p>
+        <p class="text-center">No matching vehicles found.</p>
       <% end %>
     </div>
   </div>
