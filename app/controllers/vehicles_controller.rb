@@ -5,7 +5,7 @@ class VehiclesController < ApplicationController
   before_action :set_vehicle, only: %i[show edit update]
 
   def index
-    @vehicles = Vehicle.order(created_at: :desc).page(params[:page]).per(50)
+    @vehicles = Vehicle.order(created_at: :desc).page(params[:page]).per(1)
   end
 
   def new
