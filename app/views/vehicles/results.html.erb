@@ -41,6 +41,10 @@
             <% end %>
           </tbody>
         </table>
+		<div class="d-flex justify-content-center mt-3">
+		  <%= paginate @vehicles %>
+		</div>
+		
       <% else %>
         <p>No matching vehicles found.</p>
       <% end %>

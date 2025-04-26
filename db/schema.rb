@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_24_172856) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_26_132116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_24_172856) do
     t.text "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["char_dham_registration_number"], name: "index_vehicles_on_char_dham_registration_number"
+    t.index ["check_date"], name: "index_vehicles_on_check_date"
+    t.index ["checkpost"], name: "index_vehicles_on_checkpost"
+    t.index ["owner"], name: "index_vehicles_on_owner"
+    t.index ["vehicle_number"], name: "index_vehicles_on_vehicle_number"
   end
 
 end

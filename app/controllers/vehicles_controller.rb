@@ -1,9 +1,11 @@
+# app/controllers/vehicles_controller.rb
+
 class VehiclesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_vehicle, only: %i[show edit update]
 
   def index
-    @vehicles = Vehicle.order(created_at: :desc).limit(50)
+    @vehicles = Vehicle.order(created_at: :desc).page(params[:page]).per(50)
   end
 
   def new
@@ -30,10 +32,11 @@ class VehiclesController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+  end
 
   def search
-    # will add search logic later
+    # Search form page (no logic here yet)
   end
 
   def results
@@ -41,10 +44,7 @@ class VehiclesController < ApplicationController
 
     if params[:dham_destinations].present?
       selected_dhams = Array(params[:dham_destinations]).map(&:strip)
-
-      @vehicles = @vehicles.select do |v|
-        (v.dham_list & selected_dhams).any?
-      end
+      @vehicles = @vehicles.select { |v| (v.dham_list & selected_dhams).any? }
     end
 
     if params[:vehicle_number].present?
@@ -66,6 +66,9 @@ class VehiclesController < ApplicationController
     end
 
     @vehicles = @vehicles.where("remarks ILIKE ?", "%#{params[:remarks]}%") if params[:remarks].present?
+
+    # Pagination
+    @vehicles = @vehicles.page(params[:page]).per(50)
   end
 
   private
