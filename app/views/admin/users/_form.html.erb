@@ -18,4 +18,18 @@
   <%= f.select :role, [['Admin', 'admin'], ['Creator', 'creator'], ['Reader', 'reader']], {}, class: "form-select" %>
 </div>
 
+<div class="mb-3">
+
+<%= f.label :checkpost %>
+<%= f.select :checkpost, [
+  "Kuthal Gate", "Kata Patthar", "Herbertpur", 
+  "Bhadrakali", "Tapovan", "Satyanarayan", "Sonprayag", "not required"
+], { prompt: "Select Checkpost" }, class: "form-control" %>
+
+
+
+</div>
+
+
+
 <%= f.submit class: "btn btn-primary" %>

@@ -12,10 +12,10 @@
 
 <div class="mb-3">
   <%= f.label :checkpost, class: "form-label" %>
-  <%= f.select :checkpost, [
-      "Kuthal Gate", "Kata Patthar", "Herbertpur", "Bhadrakali", 
-      "Tapovan", "Satyanarayan", "Sonprayag"
-    ], { prompt: "Select Checkpost" }, class: "form-select" %>
+  
+	
+	<%= f.select :checkpost, options_for_select(CHECKPOST_LIST, selected: current_user.checkpost), { disabled: current_user.checkpost.present? }, class: "form-control" %>
+	
 </div>
 
 <div class="mb-3">

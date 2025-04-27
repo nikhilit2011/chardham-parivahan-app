@@ -1,4 +1,4 @@
-div class="container mt-4">
+<div class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-md-10 col-lg-8">
       <div class="card shadow-sm rounded">
@@ -9,38 +9,46 @@ div class="container mt-4">
 
           <%= simple_form_for @vehicle do |f| %>
             <div class="row">
-              <div class="col-md-6"><%= f.input :vehicle_number %></div>
-              <div class="col-md-6"><%= f.input :check_date %></div>
+              <div class="col-md-6 mb-3"><%= f.input :vehicle_number %></div>
+              <div class="col-md-6 mb-3"><%= f.input :check_date, input_html: { value: Date.today } %></div>
 
               <!-- ✅ Dropdown for Checkpost -->
-              <div class="col-md-6">
-                <%= f.input :checkpost, collection: [
+              <div class="col-md-6 mb-3">
+                <%= f.input :checkpost,
+                    collection: [
                       'Kuthal Gate', 'Kata Patthar', 'Herbertpur',
                       'Bhadrakali', 'Tapovan', 'Satyanarayan', 'Sonprayag'
                     ],
-                    prompt: "Select Checkpost" %>
+                    selected: current_user.checkpost,
+                    prompt: "Select Checkpost",
+                    input_html: { disabled: current_user.checkpost.present? } %>
+
+                <% if current_user.checkpost.present? %>
+                  <%= f.hidden_field :checkpost, value: current_user.checkpost %>
+                <% end %>
               </div>
 
-              <div class="col-md-6"><%= f.input :owner %></div>
-              <div class="col-md-6"><%= f.input :char_dham_registration_number %></div>
-              <div class="col-md-6"><%= f.input :green_card_status, collection: ['Yes', 'No'] %></div>
-              <div class="col-md-6"><%= f.input :trip_card_status, collection: ['Active', 'Expired'] %></div>
-              <div class="col-md-6"><%= f.input :number_of_pilgrims %></div>
-              
-              <div class="col-md-12">
-                <%= f.input :dham_destinations, collection: [
+              <div class="col-md-6 mb-3"><%= f.input :owner %></div>
+              <div class="col-md-6 mb-3"><%= f.input :char_dham_registration_number %></div>
+              <div class="col-md-6 mb-3"><%= f.input :green_card_status, collection: ['Yes', 'No'], prompt: "Select Status" %></div>
+              <div class="col-md-6 mb-3"><%= f.input :trip_card_status, collection: ['Active', 'Expired'], prompt: "Select Status" %></div>
+              <div class="col-md-6 mb-3"><%= f.input :number_of_pilgrims %></div>
+
+              <div class="col-md-12 mb-3">
+                <%= f.input :dham_destinations, 
+                    collection: [
                       'Yamunotri Ji', 'Gangotri Ji', 'Kedarnath Ji',
                       'Badrinath Ji', 'Hemkund Sahib'
                     ],
                     input_html: { multiple: true, class: 'select2 form-control' } %>
               </div>
 
-              <div class="col-md-6"><%= f.input :registered_in_uttarakhand, as: :boolean %></div>
-              <div class="col-md-12"><%= f.input :remarks %></div>
+              <div class="col-md-6 mb-3"><%= f.input :registered_in_uttarakhand, as: :boolean %></div>
+              <div class="col-md-12 mb-3"><%= f.input :remarks %></div>
             </div>
 
-            <div class="mt-3">
-              <%= f.button :submit, "Save Vehicle", class: "btn btn-success" %>
+            <div class="mt-4">
+              <%= f.button :submit, "Save Vehicle", class: "btn btn-success w-100" %>
             </div>
           <% end %>
 
