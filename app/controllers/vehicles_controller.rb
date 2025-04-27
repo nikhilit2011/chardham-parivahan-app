@@ -2,7 +2,7 @@
 
 class VehiclesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_vehicle, only: %i[show edit update]
+  before_action :set_vehicle, only: %i[show edit update destroy]
 
   def index
     @vehicles = Vehicle.order(created_at: :desc)
@@ -39,7 +39,7 @@ class VehiclesController < ApplicationController
     if @vehicle.save
       redirect_to @vehicle, notice: "Vehicle was successfully created."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -57,8 +57,13 @@ class VehiclesController < ApplicationController
   def show
   end
 
+  def destroy
+    @vehicle.destroy
+    redirect_to vehicles_path, notice: "Vehicle was successfully deleted."
+  end
+
   def search
-    # Search form page (no logic here yet)
+    # Search form page
   end
 
   def results
@@ -101,7 +106,7 @@ class VehiclesController < ApplicationController
     respond_to do |format|
       format.html
       format.xlsx {
-        response.headers['Content-Disposition'] = "attachment; filename=search_results.xlsx"
+        response.headers['Content-Disposition'] = 'attachment; filename=search_results.xlsx'
       }
     end
   end
@@ -115,7 +120,9 @@ class VehiclesController < ApplicationController
   def vehicle_params
     params.require(:vehicle).permit(
       :vehicle_number, :checkpost, :owner, :char_dham_registration_number,
-      :green_card_status, :trip_card_status, :check_date, :number_of_pilgrims,
+      :green_card_status, :green_card_valid_till,  # ✅ Added
+      :trip_card_status, :trip_card_valid_till,    # ✅ Added
+      :check_date, :number_of_pilgrims,
       :return_date, :registered_in_uttarakhand, :remarks,
       dham_destinations: []
     )

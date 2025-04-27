@@ -7,15 +7,28 @@
 
 <div class="mb-3">
   <%= f.label :check_date, class: "form-label" %>
-  <%= f.date_field :check_date, class: "form-control" %>
+  <%= f.date_field :check_date, input_html: { value: Date.today, min: Date.today, max: Date.today } %>
 </div>
 
 <div class="mb-3">
   <%= f.label :checkpost, class: "form-label" %>
-  
-	
-	<%= f.select :checkpost, options_for_select(CHECKPOST_LIST, selected: current_user.checkpost), { disabled: current_user.checkpost.present? }, class: "form-control" %>
-	
+
+  <% if f.object.new_record? && current_user.checkpost.present? %>
+    <%= f.select :checkpost, [
+        "Kuthal Gate", "Kata Patthar", "Herbertpur", "Bhadrakali", 
+        "Tapovan", "Satyanarayan", "Sonprayag"
+      ],
+      { prompt: "Select Checkpost", selected: current_user.checkpost },
+      class: "form-select", disabled: true %>
+    <%= f.hidden_field :checkpost, value: current_user.checkpost %>
+  <% else %>
+    <%= f.select :checkpost, [
+        "Kuthal Gate", "Kata Patthar", "Herbertpur", "Bhadrakali", 
+        "Tapovan", "Satyanarayan", "Sonprayag"
+      ],
+      { prompt: "Select Checkpost" },
+      class: "form-select" %>
+  <% end %>
 </div>
 
 <div class="mb-3">
@@ -34,8 +47,18 @@
 </div>
 
 <div class="mb-3">
+  <%= f.label :green_card_valid_till, "Green Card Valid Till", class: "form-label" %>
+  <%= f.date_field :green_card_valid_till, class: "form-control" %>
+</div>
+
+<div class="mb-3">
   <%= f.label :trip_card_status, class: "form-label" %>
   <%= f.select :trip_card_status, ["OK", "Not OK"], {}, class: "form-select" %>
+</div>
+
+<div class="mb-3">
+  <%= f.label :trip_card_valid_till, "Trip Card Valid Till", class: "form-label" %>
+  <%= f.date_field :trip_card_valid_till, class: "form-control" %>
 </div>
 
 <div class="mb-3">

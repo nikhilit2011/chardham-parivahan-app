@@ -10,9 +10,12 @@
           <%= simple_form_for @vehicle do |f| %>
             <div class="row">
               <div class="col-md-6 mb-3"><%= f.input :vehicle_number %></div>
-              <div class="col-md-6 mb-3"><%= f.input :check_date, input_html: { value: Date.today } %></div>
+              
+			  <div class="col-md-6 mb-3">
+				<%= f.input :check_date, input_html: { value: Date.today, min: Date.today, max: Date.today } %>
+			    
+			  </div>
 
-              <!-- ✅ Dropdown for Checkpost -->
               <div class="col-md-6 mb-3">
                 <%= f.input :checkpost,
                     collection: [
@@ -30,8 +33,13 @@
 
               <div class="col-md-6 mb-3"><%= f.input :owner %></div>
               <div class="col-md-6 mb-3"><%= f.input :char_dham_registration_number %></div>
+
               <div class="col-md-6 mb-3"><%= f.input :green_card_status, collection: ['Yes', 'No'], prompt: "Select Status" %></div>
+              <div class="col-md-6 mb-3"><%= f.input :green_card_valid_till, as: :date, label: "Green Card Valid Till" %></div> <!-- ✅ Added -->
+
               <div class="col-md-6 mb-3"><%= f.input :trip_card_status, collection: ['Active', 'Expired'], prompt: "Select Status" %></div>
+              <div class="col-md-6 mb-3"><%= f.input :trip_card_valid_till, as: :date, label: "Trip Card Valid Till" %></div> <!-- ✅ Added -->
+
               <div class="col-md-6 mb-3"><%= f.input :number_of_pilgrims %></div>
 
               <div class="col-md-12 mb-3">

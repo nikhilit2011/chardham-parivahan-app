@@ -13,6 +13,9 @@ class Vehicle < ApplicationRecord
   validate :return_date_not_equal_check_date
   validate :require_return_date_if_duplicate_vehicle_on_diff_date, on: :create
   validate :prevent_return_date_on_create, on: :create
+  validate :check_date_must_be_today  # ✅ Newly added validation
+
+  validates :green_card_valid_till, :trip_card_valid_till, presence: true, if: -> { green_card_status == 'Yes' || trip_card_status == 'Active' }
 
   VALID_VEHICLE_REGEX = /\A[A-Z]{2} \d{2} [A-Z]{1,3} \d{4}\z/
   validates :vehicle_number, format: {
@@ -90,6 +93,13 @@ class Vehicle < ApplicationRecord
   def prevent_return_date_on_create
     if return_date.present?
       errors.add(:return_date, "can only be filled while editing")
+    end
+  end
+
+  # ✅ Newly added validation
+  def check_date_must_be_today
+    if check_date.present? && check_date != Date.today
+      errors.add(:check_date, "must be today's date")
     end
   end
 end
